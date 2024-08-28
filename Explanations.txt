@@ -1,0 +1,204 @@
+
+first answer
+
+
+
+This method takes two parameters:
+s: The input string for which we want to find the longest substring.
+k: The maximum number of distinct characters allowed in the substring.
+Initialization:
+Java
+
+if (s == null || s.isEmpty() || k <= 0) {
+    return 0;
+}
+
+We handle edge cases:
+If the input string s is null, empty, or if k is non-positive, we return 0 (since there can’t be a valid substring).
+Sliding Window Approach:
+Java
+
+int n = s.length();
+int left = 0;
+int maxLen = 0;
+Map<Character, Integer> charCount = new HashMap<>();
+
+We initialize variables:
+n: Length of the input string.
+left: Left pointer of the sliding window.
+maxLen: Maximum length of the valid substring.
+charCount: A map to store character frequencies within the window.
+Sliding Window Expansion:
+Java
+
+for (int right = 0; right < n; right++) {
+    char currChar = s.charAt(right);
+    charCount.put(currChar, charCount.getOrDefault(currChar, 0) + 1);
+
+We iterate through the string from left to right.
+For each character encountered, we update its count in the charCount map.
+Sliding Window Shrinkage:
+Java
+
+    while (charCount.size() > k) {
+        char leftChar = s.charAt(left);
+        charCount.put(leftChar, charCount.get(leftChar) - 1);
+        if (charCount.get(leftChar) == 0) {
+            charCount.remove(leftChar);
+        }
+        left++;
+    }
+
+While the number of unique characters in the window exceeds k, we shrink the window from the left.
+We decrement the count of the leftmost character and remove it from the map if its count becomes zero.
+Update Maximum Length:
+Java
+
+    maxLen = Math.max(maxLen, right - left + 1);
+
+We update maxLen whenever we find a valid window (i.e., the number of unique characters is at most k).
+Final Result:
+Java
+
+return maxLen;
+
+We return the maximum length of the valid substring.
+
+
+
+
+
+
+second answer
+
+ListNode Class:
+We define a custom class called ListNode to represent a singly-linked list.
+It has two fields: val (the value of the node) and next (a reference to the next node).
+mergeKLists Method:
+This method takes an array of ListNode (representing k sorted linked lists) as input.
+We create a PriorityQueue (min-heap) to store the heads of the linked lists.
+We insert the heads of all k linked lists into the min-heap.
+We create a dummy node to simplify the merging process.
+We repeatedly pop the smallest element from the min-heap and append it to the merged list.
+If the popped node has a next node, we insert that next node back into the min-heap.
+Finally, we return the merged list.
+createNode Method:
+A helper method to create a new ListNode with the given value.
+Example Usage (main Method):
+We create sample linked lists (list1, list2, and list3).
+We merge these lists using the mergeKLists method.
+We print the merged list.
+Output:
+The output for the given example (lists [1,4,5], [1,3,4], and [2,6]) will be 1 1 2 3 4 4 5 6.
+
+
+
+
+
+third answer
+
+
+
+
+
+fourSum Method:
+This method takes an array of integers (nums) and a target value (target) as input.
+We create an empty list of lists (result) to store the quadruplets.
+We sort the input array nums in ascending order.
+Outer Loop (a):
+We iterate through the array from index 0 to nums.length - 3.
+We skip duplicates by checking if nums[a] is equal to nums[a - 1].
+Inner Loop (b):
+Within the outer loop, we iterate from a + 1 to nums.length - 2.
+Again, we skip duplicates by checking if nums[b] is equal to nums[b - 1].
+Two-Pointer Approach (left and right):
+We initialize two pointers: left (pointing to b + 1) and right (pointing to the end of the array).
+While left < right, we calculate the current sum (currSum) of the four elements.
+If currSum equals the target, we add the quadruplet to the result, skip duplicates, and update the pointers.
+If currSum is less than the target, we move left to the right.
+If currSum is greater than the target, we move right to the left.
+Return the resulting list of quadruplets.
+Example Usage (main Method):
+We create sample arrays (nums1 and nums2).
+We call the fourSum method with the target values.
+We print the resulting quadruplets.
+
+
+
+fourth answer 
+
+
+We have a for loop that iterates through the array nums.
+The loop condition is i < nums.length && i <= maxReach.
+i < nums.length: The loop continues as long as the index i is less than the length of the array nums.
+i <= maxReach: Additionally, the loop continues if the index i is less than or equal to the current value of maxReach.
+Inside the loop:
+We calculate the sum of the current index i and the value at nums[i].
+We update maxReach to be the maximum of its current value and the calculated sum.
+Overall, this loop helps track the farthest index that can currently be reached based on the maximum jump lengths specified in the nums array. If maxReach becomes greater than or equal to the last index, it indicates that we can reach the end of the array.
+
+
+
+
+
+
+
+
+
+
+fifth answer
+
+
+
+
+groupAnagrams Method:
+This method takes an array of strings (strs) as input.
+We create a map (anagramMap) where:
+The keys are the sorted characters of each word (anagram root).
+The values are lists of words that are anagrams of each other.
+Calculate Anagram Roots:
+For each word in the input array strs:
+Convert the word to a character array (charArray).
+Sort the characters of the word to get its anagram root.
+If the anagram root is already in the map, add the word to the corresponding list.
+Otherwise, create a new list with the word and add it to the map.
+Return the Values (Lists of Anagrams):
+We return the values (lists of anagrams) from the map.
+Example Usage (main Method):
+We create a sample array (strs = ["eat", "tea", "tan", "ate", "nat", "bat"]).
+We call the groupAnagrams method to compute the anagram groups.
+We print the resulting list of lists.
+
+
+
+
+
+
+
+
+sixth answer 
+
+
+
+
+
+
+productExceptSelf Method:
+This method takes an array of integers (nums) as input.
+We create two arrays: prefix and suffix.
+prefix[i] stores the product of all elements up to index i-1 from the start of the array.
+suffix[i] stores the product of all elements up to index i+1 from the end of the array.
+Calculate Prefix Products:
+We initialize prefix[0] as 1 (since there are no elements before the first element).
+For every index i from 1 to n-1, we calculate prefix[i] by multiplying prefix[i-1] with nums[i-1].
+This stores the product up to index i-1 from the start of the array.
+Calculate Suffix Products:
+We initialize suffix[n-1] as 1 (since there are no elements after the last element).
+For every index i from n-2 to 0 (in reverse order), we calculate suffix[i] by multiplying suffix[i+1] with nums[i+1].
+This stores the product up to index i+1 from the end of the array.
+Calculate Final Product Array:
+For every index i, the output will be prefix[i] * suffix[i], which represents the product of the array elements except the element at index i.
+Example Usage (main Method):
+We create a sample array (nums = [1, 2, 3, 4]).
+We call the productExceptSelf method to compute the product array.
+We print the resulting array.
